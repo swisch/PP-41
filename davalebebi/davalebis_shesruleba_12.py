@@ -9,124 +9,38 @@ def validate_orders(func):
 
     def wrapper(orders):
 
-        valid_statuses = [
-            "completed",
-            "pending",
-            "cancelled"
-        ]
-
         try:
 
-            # orders უნდა იყოს სია
-            if not isinstance(orders, list):
-                raise ValueError(
-                    "შეკვეთები უნდა იყოს list ტიპის"
-                )
-
-            # orders სია არ უნდა იყოს ცარიელი
+            # შეკვეთების სია არ უნდა იყოს ცარიელი
             if len(orders) == 0:
                 raise ValueError(
                     "შეკვეთების სია ცარიელია"
                 )
 
+
             # გადავუყვებით ყველა შეკვეთას
             for order in orders:
 
-                # თითოეული შეკვეთა უნდა იყოს dictionary
-                if not isinstance(order, dict):
-                    raise ValueError(
-                        "შეკვეთა უნდა იყოს dictionary ტიპის"
-                    )
-
-                # ====================================================
-                # საჭირო გასაღებების შემოწმება
-                # ====================================================
-
-                if "customer" not in order:
-                    raise ValueError(
-                        "აკლია customer გასაღები"
-                    )
-
-                if "product" not in order:
-                    raise ValueError(
-                        "აკლია product გასაღები"
-                    )
-
-                if "price" not in order:
-                    raise ValueError(
-                        "აკლია price გასაღები"
-                    )
-
-                if "quantity" not in order:
-                    raise ValueError(
-                        "აკლია quantity გასაღები"
-                    )
-
-                if "status" not in order:
-                    raise ValueError(
-                        "აკლია status გასაღები"
-                    )
-
-                # ====================================================
-                # მომხმარებლის შემოწმება
-                # ====================================================
-
+                # მომხმარებლის სახელი არ უნდა იყოს ცარიელი
                 if order["customer"] == "":
                     raise ValueError(
                         "მომხმარებლის სახელი ცარიელია"
                     )
 
-                # ====================================================
-                # პროდუქტის შემოწმება
-                # ====================================================
 
-                if order["product"] == "":
-                    raise ValueError(
-                        "პროდუქტის დასახელება ცარიელია"
-                    )
-
-                # ====================================================
-                # ფასის ტიპის შემოწმება
-                # ====================================================
-
-                if not isinstance(
-                    order["price"],
-                    (int, float)
-                ):
-                    raise ValueError(
-                        "ფასი უნდა იყოს რიცხვი"
-                    )
-
+                # ფასი უნდა იყოს 0-ზე მეტი
                 if order["price"] <= 0:
                     raise ValueError(
                         "ფასი უნდა იყოს 0-ზე მეტი"
                     )
 
-                # ====================================================
-                # რაოდენობის ტიპის შემოწმება
-                # ====================================================
 
-                if not isinstance(
-                    order["quantity"],
-                    int
-                ):
-                    raise ValueError(
-                        "რაოდენობა უნდა იყოს მთელი რიცხვი"
-                    )
-
+                # რაოდენობა უნდა იყოს 0-ზე მეტი
                 if order["quantity"] <= 0:
                     raise ValueError(
                         "რაოდენობა უნდა იყოს 0-ზე მეტი"
                     )
 
-                # ====================================================
-                # სტატუსის შემოწმება
-                # ====================================================
-
-                if order["status"] not in valid_statuses:
-                    raise ValueError(
-                        "შეკვეთის სტატუსი არასწორია"
-                    )
 
         except ValueError as error:
 
@@ -136,9 +50,11 @@ def validate_orders(func):
 
             return
 
-        # თუ ყველა მონაცემი სწორია,
+
+        # თუ მონაცემები სწორია,
         # ვიძახებთ შემდეგ ფუნქციას
         return func(orders)
+
 
     return wrapper
 
@@ -151,18 +67,31 @@ def execution_time(func):
 
     def wrapper(orders):
 
+        # ვინახავთ ფუნქციის დაწყების დროს
         start_time = time.time()
 
+
+        # ვიძახებთ ფუნქციას
         result = func(orders)
 
+
+        # ვინახავთ ფუნქციის დასრულების დროს
         end_time = time.time()
 
+
+        # ვითვლით შესრულების დროს
         total_time = end_time - start_time
 
+
         print()
-        print("პროგრამის შესრულების დრო:", total_time)
+        print(
+            "პროგრამის შესრულების დრო:",
+            total_time
+        )
+
 
         return result
+
 
     return wrapper
 
@@ -181,7 +110,10 @@ def analyze_orders(func):
         print("======================================")
         print()
 
+
+        # ვიძახებთ ძირითად ფუნქციას
         result = func(orders)
+
 
         print()
         print("======================================")
@@ -189,7 +121,11 @@ def analyze_orders(func):
         print("======================================")
         print()
 
-        # შეკვეთების რაოდენობა
+
+        # ====================================================
+        # შეკვეთების რაოდენობა სტატუსების მიხედვით
+        # ====================================================
+
         completed_count = len(
             result["completed_orders"]
         )
@@ -201,6 +137,7 @@ def analyze_orders(func):
         pending_count = len(
             result["pending_orders"]
         )
+
 
         print(
             "დასრულებული შეკვეთების რაოდენობა:",
@@ -222,6 +159,7 @@ def analyze_orders(func):
             result["total_income"]
         )
 
+
         # ====================================================
         # მომხმარებლების დანახარჯები
         # ====================================================
@@ -230,8 +168,10 @@ def analyze_orders(func):
             "customer_spending"
         ]
 
+
         print()
         print("მომხმარებლების დანახარჯები:")
+
 
         for customer in customer_spending:
 
@@ -241,12 +181,14 @@ def analyze_orders(func):
                 customer_spending[customer]
             )
 
+
         # ====================================================
-        # ყველაზე მეტი თანხის დამხარჯველი მომხმარებელი
+        # მომხმარებელი, რომელმაც ყველაზე მეტი თანხა დახარჯა
         # ====================================================
 
         max_customer = None
         max_spending = 0
+
 
         for customer in customer_spending:
 
@@ -261,7 +203,9 @@ def analyze_orders(func):
 
                 max_customer = customer
 
+
         print()
+
 
         if max_customer != None:
 
@@ -275,11 +219,13 @@ def analyze_orders(func):
                 max_spending
             )
 
+
         else:
 
             print(
                 "დასრულებული შეკვეთები არ არის."
             )
+
 
         # ====================================================
         # ყველაზე ძვირადღირებული დასრულებული შეკვეთა
@@ -288,14 +234,14 @@ def analyze_orders(func):
         most_expensive_order = None
         max_order_price = 0
 
-        for order in result[
-            "completed_orders"
-        ]:
+
+        for order in result["completed_orders"]:
 
             total_price = (
                 order["price"]
                 * order["quantity"]
             )
+
 
             if total_price > max_order_price:
 
@@ -303,7 +249,9 @@ def analyze_orders(func):
 
                 most_expensive_order = order
 
+
         print()
+
 
         if most_expensive_order != None:
 
@@ -337,13 +285,16 @@ def analyze_orders(func):
                 max_order_price
             )
 
+
         else:
 
             print(
                 "დასრულებული შეკვეთა არ მოიძებნა."
             )
 
+
         return result
+
 
     return wrapper
 
@@ -357,22 +308,40 @@ def analyze_orders(func):
 @analyze_orders
 def process_orders(orders):
 
+
+    # დასრულებული შეკვეთები
     completed_orders = []
+
+
+    # გაუქმებული შეკვეთები
     cancelled_orders = []
+
+
+    # მოლოდინში მყოფი შეკვეთები
     pending_orders = []
 
+
+    # საერთო შემოსავალი
     total_income = 0
 
+
+    # მომხმარებლების დანახარჯები
     customer_spending = {}
 
+
+    # გადავუყვებით ყველა შეკვეთას
     for order in orders:
 
+
+        # შეკვეთის სრული ფასი
         total_price = (
             order["price"]
             * order["quantity"]
         )
 
+
         customer = order["customer"]
+
 
         # ====================================================
         # დასრულებული შეკვეთა
@@ -380,28 +349,34 @@ def process_orders(orders):
 
         if order["status"] == "completed":
 
+
             completed_orders.append(order)
 
+
             total_income = (
-                total_income + total_price
+                total_income
+                + total_price
             )
 
+
+            # თუ მომხმარებელი უკვე არსებობს ლექსიკონში,
+            # მის თანხას ვუმატებთ ახალ შეკვეთას
             if customer in customer_spending:
 
-                customer_spending[
-                    customer
-                ] = (
-                    customer_spending[
-                        customer
-                    ]
+                customer_spending[customer] = (
+                    customer_spending[customer]
                     + total_price
                 )
 
+
+            # თუ მომხმარებელი ჯერ არ არსებობს,
+            # ვქმნით ახალ ჩანაწერს
             else:
 
-                customer_spending[
-                    customer
-                ] = total_price
+                customer_spending[customer] = (
+                    total_price
+                )
+
 
         # ====================================================
         # მოლოდინში მყოფი შეკვეთა
@@ -409,7 +384,9 @@ def process_orders(orders):
 
         elif order["status"] == "pending":
 
+
             pending_orders.append(order)
+
 
             print(
                 "შეკვეთა მოლოდინშია:",
@@ -418,13 +395,16 @@ def process_orders(orders):
                 order["product"]
             )
 
+
         # ====================================================
         # გაუქმებული შეკვეთა
         # ====================================================
 
         elif order["status"] == "cancelled":
 
+
             cancelled_orders.append(order)
+
 
             print(
                 "შეკვეთა გაუქმებულია:",
@@ -433,6 +413,8 @@ def process_orders(orders):
                 order["product"]
             )
 
+
+    # ვაბრუნებთ დამუშავებულ ინფორმაციას
     return {
 
         "completed_orders":
@@ -453,15 +435,18 @@ def process_orders(orders):
 
 
 # ============================================================
-# მომხმარებლისგან შეკვეთების ინფორმაციის მიღება
+# შეკვეთების ინფორმაციის შეყვანა
 # ============================================================
 
 def get_orders():
 
+
+    # აქ შევინახავთ ყველა შეკვეთას
     orders = []
 
+
     # ========================================================
-    # შეკვეთების რაოდენობა
+    # შეკვეთების რაოდენობის შეყვანა
     # ========================================================
 
     while True:
@@ -474,6 +459,7 @@ def get_orders():
                 )
             )
 
+
             if order_count <= 0:
 
                 raise ValueError(
@@ -481,12 +467,18 @@ def get_orders():
                     "უნდა იყოს 0-ზე მეტი"
                 )
 
+
             break
 
-        except ValueError as error:
+
+        except ValueError:
 
             print()
-            print("შეცდომა:", error)
+            print(
+                "შეცდომა! შეიყვანეთ "
+                "დადებითი მთელი რიცხვი."
+            )
+
 
     # ========================================================
     # თითოეული შეკვეთის შეყვანა
@@ -494,10 +486,12 @@ def get_orders():
 
     for i in range(order_count):
 
+
         print()
         print("======================================")
         print("შეკვეთა №", i + 1)
         print("======================================")
+
 
         # ====================================================
         # მომხმარებლის სახელი
@@ -509,6 +503,7 @@ def get_orders():
                 "შეიყვანეთ მომხმარებლის სახელი: "
             ).strip().title()
 
+
             if customer == "":
 
                 print()
@@ -516,6 +511,7 @@ def get_orders():
                     "შეცდომა! სახელი ცარიელი "
                     "არ უნდა იყოს."
                 )
+
 
             elif any(
                 character.isdigit()
@@ -528,9 +524,11 @@ def get_orders():
                     "შეიცავდეს ციფრებს."
                 )
 
+
             else:
 
                 break
+
 
         # ====================================================
         # პროდუქტის არჩევა
@@ -538,28 +536,21 @@ def get_orders():
 
         while True:
 
+
             print()
             print("აირჩიეთ პროდუქტი:")
             print()
-            print(
-                "1 - Laptop      - ფასი: 2500"
-            )
-            print(
-                "2 - Mouse       - ფასი: 50"
-            )
-            print(
-                "3 - Keyboard    - ფასი: 150"
-            )
-            print(
-                "4 - Monitor     - ფასი: 800"
-            )
-            print(
-                "5 - Headphones  - ფასი: 300"
-            )
+            print("1 - Laptop      - ფასი: 2500")
+            print("2 - Mouse       - ფასი: 50")
+            print("3 - Keyboard    - ფასი: 150")
+            print("4 - Monitor     - ფასი: 800")
+            print("5 - Headphones  - ფასი: 300")
+
 
             product_choice = input(
                 "შეიყვანეთ 1, 2, 3, 4 ან 5: "
             ).strip()
+
 
             if product_choice == "1":
 
@@ -568,12 +559,14 @@ def get_orders():
 
                 break
 
+
             elif product_choice == "2":
 
                 product = "Mouse"
                 price = 50
 
                 break
+
 
             elif product_choice == "3":
 
@@ -582,6 +575,7 @@ def get_orders():
 
                 break
 
+
             elif product_choice == "4":
 
                 product = "Monitor"
@@ -589,12 +583,14 @@ def get_orders():
 
                 break
 
+
             elif product_choice == "5":
 
                 product = "Headphones"
                 price = 300
 
                 break
+
 
             else:
 
@@ -604,6 +600,8 @@ def get_orders():
                     "1, 2, 3, 4 ან 5."
                 )
 
+
+        # არჩეული პროდუქტის ჩვენება
         print()
         print(
             "არჩეული პროდუქტი:",
@@ -615,8 +613,9 @@ def get_orders():
             price
         )
 
+
         # ====================================================
-        # რაოდენობა
+        # პროდუქტის რაოდენობა
         # ====================================================
 
         while True:
@@ -629,6 +628,7 @@ def get_orders():
                     )
                 )
 
+
                 if quantity <= 0:
 
                     raise ValueError(
@@ -636,7 +636,9 @@ def get_orders():
                         "0-ზე მეტი"
                     )
 
+
                 break
+
 
             except ValueError:
 
@@ -646,6 +648,7 @@ def get_orders():
                     "დადებითი მთელი რიცხვი."
                 )
 
+
         # ====================================================
         # შეკვეთის სრული ღირებულება
         # ====================================================
@@ -654,11 +657,13 @@ def get_orders():
             price * quantity
         )
 
+
         print()
         print(
             "შეკვეთის სრული ღირებულება:",
             total_price
         )
+
 
         # ====================================================
         # შეკვეთის სტატუსის არჩევა
@@ -666,24 +671,19 @@ def get_orders():
 
         while True:
 
+
             print()
-            print(
-                "აირჩიეთ შეკვეთის სტატუსი:"
-            )
+            print("აირჩიეთ შეკვეთის სტატუსი:")
             print()
-            print(
-                "1 - დასრულებული შეკვეთა"
-            )
-            print(
-                "2 - მოლოდინში მყოფი შეკვეთა"
-            )
-            print(
-                "3 - გაუქმებული შეკვეთა"
-            )
+            print("1 - დასრულებული შეკვეთა")
+            print("2 - მოლოდინში მყოფი შეკვეთა")
+            print("3 - გაუქმებული შეკვეთა")
+
 
             status_choice = input(
                 "შეიყვანეთ 1, 2 ან 3: "
             ).strip()
+
 
             if status_choice == "1":
 
@@ -691,17 +691,20 @@ def get_orders():
 
                 break
 
+
             elif status_choice == "2":
 
                 status = "pending"
 
                 break
 
+
             elif status_choice == "3":
 
                 status = "cancelled"
 
                 break
+
 
             else:
 
@@ -711,38 +714,38 @@ def get_orders():
                     "1, 2 ან 3."
                 )
 
+
         # ====================================================
         # ვქმნით შეკვეთის dictionary-ს
         # ====================================================
 
         order = {
 
-            "customer":
-                customer,
+            "customer": customer,
 
-            "product":
-                product,
+            "product": product,
 
-            "price":
-                price,
+            "price": price,
 
-            "quantity":
-                quantity,
+            "quantity": quantity,
 
-            "status":
-                status
+            "status": status
         }
 
+
+        # შეკვეთას ვამატებთ სიაში
         orders.append(order)
 
+
         # ====================================================
-        # შეყვანილი შეკვეთის ჩვენება
+        # დამატებული შეკვეთის ინფორმაცია
         # ====================================================
 
         print()
         print("--------------------------------------")
         print("შეკვეთა წარმატებით დაემატა.")
         print("--------------------------------------")
+
 
         print(
             "მომხმარებელი:",
@@ -769,11 +772,14 @@ def get_orders():
             total_price
         )
 
+
+        # სტატუსის ქართულად ჩვენება
         if status == "completed":
 
             print(
                 "სტატუსი: დასრულებული"
             )
+
 
         elif status == "pending":
 
@@ -781,12 +787,15 @@ def get_orders():
                 "სტატუსი: მოლოდინში"
             )
 
+
         elif status == "cancelled":
 
             print(
                 "სტატუსი: გაუქმებული"
             )
 
+
+    # ვაბრუნებთ ყველა შეკვეთას
     return orders
 
 
