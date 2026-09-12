@@ -11,23 +11,12 @@ def generate_strong_password(length: int) -> str:
     # ========================================================
     # ვაერთიანებთ ყველა შესაძლო სიმბოლოს
     # ========================================================
-    #
-    # string.ascii_letters შეიცავს:
-    # abcdefghijklmnopqrstuvwxyz
-    # ABCDEFGHIJKLMNOPQRSTUVWXYZ
-    #
-    # string.digits შეიცავს:
-    # 0123456789
-    #
-    # string.punctuation შეიცავს სპეციალურ სიმბოლოებს:
-    # !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~
+    #    string.ascii_letters <- შეიცავს: abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ
+    #    string.digits შეიცავს: 0123456789
+    #    string.punctuation შეიცავს სპეციალურ სიმბოლოებს: !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~
     # ========================================================
 
-    characters = (
-        string.ascii_letters
-        + string.digits
-        + string.punctuation
-    )
+    characters = (string.ascii_letters + string.digits + string.punctuation)
 
 
     # ========================================================
@@ -35,7 +24,6 @@ def generate_strong_password(length: int) -> str:
     # ========================================================
 
     password = ""
-
 
     # ========================================================
     # ციკლი შესრულდება იმდენჯერ,
@@ -48,7 +36,6 @@ def generate_strong_password(length: int) -> str:
         # random.choice() შემთხვევით ირჩევს
         # ერთ სიმბოლოს characters-დან
         random_character = random.choice(characters)
-
 
         # არჩეულ სიმბოლოს ვამატებთ პაროლში
         password = password + random_character
@@ -70,12 +57,7 @@ while True:
     try:
 
         # მომხმარებელს შემოაქვს პაროლის სასურველი სიგრძე
-        length = int(
-            input(
-                "შეიყვანეთ პაროლის სიგრძე: "
-            )
-        )
-
+        length = int(input("შეიყვანეთ პაროლის სიგრძე: "))
 
         # ====================================================
         # პაროლი უნდა შეიცავდეს მინიმუმ 8 სიმბოლოს
@@ -83,14 +65,9 @@ while True:
 
         if length < 8:
 
-            raise ValueError(
-                "პაროლის სიგრძე უნდა იყოს "
-                "მინიმუმ 8 სიმბოლო."
-            )
+            raise ValueError("პაროლის სიგრძე უნდა იყოს " "მინიმუმ 8 სიმბოლო.")
 
-
-        # თუ ყველაფერი სწორია,
-        # ვწყვეტთ while ციკლს
+        # თუ ყველაფერი სწორია, ვწყვეტთ while ციკლს
         break
 
 
