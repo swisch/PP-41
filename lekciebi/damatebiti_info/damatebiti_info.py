@@ -262,6 +262,4 @@
 #   -----------
 # full_name = "armen darbinian"
 
-# full_name = full_name.title()
-
 # print(full_name)
