@@ -13,12 +13,12 @@ class Lekciebi:
         print(f"Lesson '{self.name}' has been deleted.")
 
 
-name = input("Введите название урока: ")
-teacher = input("Введите имя преподавателя: ")
-duration = int(input("Введите продолжительность урока в минутах: "))
+name = input("გთხოვთ შეიყვანოთ გაკვეთილის სახელი: ")
+teacher = input("გთხოვთ შეიყვანოთ პრეპოდავტელის სახელი: ")
+duration = int(input("გთხოვთ შეიყვანოთ გაკვეთილის ხანგრძლივობა წუთებში: "))
 
 lesson1 = Lekciebi(name, teacher, duration)
 
-print("Название урока:", lesson1.name)
-print("Преподаватель:", lesson1.teacher)
-print("Продолжительность:", lesson1.duration, "минут")
+print("გაკვეთილის სახელი:", lesson1.name)
+print("პრეპოდავტელი:", lesson1.teacher)
+print("ხანგრძლივობა:", lesson1.duration, "წუთი")

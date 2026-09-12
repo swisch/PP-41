@@ -5,6 +5,45 @@
 # OOP პრინციპები - 
 # ენკაფსულაცია, პოლიმორფიზმი, მემკვიდრეობა, აბსტრაქცია
 
+# 1. Encapsulation  — ინკაფსულაცია — Инкапсуляция ENCAPSULATION - Данные контролируем - self.__balance
+# 2. Inheritance    — მემკვიდრეობა — Наследование INHERITANCE - Один класс получает возможности другого - Dog(Animal)
+# 3. Polymorphism   — პოლიმორფიზმი — Полиморфизм - POLYMORPHISM - Одинаковое имя метода — разное поведение - Dog.sound() → Гав, Cat.sound() → Мяу
+# 4. Abstraction    — აბსტრაქცია — Абстракция - ABSTRACTION - Определяем обязательный интерфейс @abstractmethod , def sound(self): pass
+
+
+#-----------------
+# 4 მეთოდი ერთად
+#-----------------
+
+# from abc import ABC, abstractmethod
+
+
+# class Employee(ABC):
+
+#     def __init__(self, name, salary):
+#         self.name = name
+#         self.__salary = salary
+
+#     def get_salary(self):
+#         return self.__salary
+
+#     @abstractmethod
+#     def work(self):
+#         pass
+
+
+# class Programmer(Employee):
+
+#     def work(self):
+#         print(f"{self.name} пишет программу")
+
+
+# class Administrator(Employee):
+
+#     def work(self):
+#         print(f"{self.name} настраивает сервер")
+
+#------------------------
 
 # encapsulation - პირდაპირი წვდომის შეზღუდვა
 class BankAccount:
