@@ -18,3 +18,7 @@
 # | **16** | ფაილები და CSV — გაგრძელება       | მონაცემების წაკითხვის, ჩაწერისა და დამუშავების პრაქტიკა; ფაილებთან და CSV-სთან მუშაობის განმტკიცება                               |
 # | **17** | OOP-ის შესავალი                   | `class`, object/ობიექტი, კლასის ეგზემპლარი, attribute/ატრიბუტი, method/მეთოდი, `self`, `__init__`; `Student` და `Book` დავალებები |
 # | **18** | OOP-ის პრინციპები                 | **Encapsulation**, **Inheritance**, **Polymorphism**, **Abstraction**, `__balance`, `Dog(Animal)`, `super()`, მეთოდების გადაფარვა |
+# | **19** | OOP — მემკვიდრეობა და პოლიმორფიზმი | მემკვიდრეობა (`Inheritance`), მეთოდის გადაფარვა (`Method Overriding`), 
+#                                                   პოლიმორფიზმი (`Polymorphism`), `super()`, 
+#                                                   მშობელი და შვილობილი კლასები; `Employee`, `Developer`, `Manager`, `Designer`; `Device`, `Camera`, `GPS`, `Phone`; 
+#                                                   მრავლობითი მემკვიდრეობის (`Multiple Inheritance`) პრაქტიკა |
